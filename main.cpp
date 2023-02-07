@@ -33,11 +33,12 @@ int main(int argc, char **argv) {
     }
 
     std::string out_dir = argv[3];
+    std::cerr << "result dir: " << out_dir << std::endl;
 
-    const float alpha = 0.9f;
-    const float gamma = 10.0f;
-    const float tau_c = 10.0f;
-    const float tau_g = 2.0f;
+//    const float alpha = 0.9f;
+//    const float gamma = 10.0f;
+//    const float tau_c = 10.0f;
+//    const float tau_g = 2.0f;
 
     int window_size = atoi(argv[4]);
     int max_disparity = atoi(argv[5]);
@@ -64,7 +65,7 @@ int main(int argc, char **argv) {
         return 1;
 
     // processing images
-    pm::PatchMatch patch_match(alpha, gamma, tau_c, tau_g, window_size, max_disparity, plane_penalty);
+    pm::PatchMatch patch_match(window_size, max_disparity, plane_penalty);
     patch_match.set(img1, img2);
     patch_match.process(iterations);
     patch_match.postProcess();

@@ -26,7 +26,7 @@ def save_points_to_ply(filepath, points, write_ascii=False):
 
 
 if __name__ == '__main__':
-    root_dir = r'F:\1_Code\2_CPP\PatchMatchStereoSAD\Speckle_Data\data75F\PM3SAD11MF7TEST'
+    root_dir = r'F:\1_Code\2_CPP\PatchMatchStereoSAD\Speckle_Data\data75F\PM3SAD11MF7'
     img_filename = 'left_disparity.tiff'
     disp = io.imread(os.path.join(root_dir, img_filename))
 

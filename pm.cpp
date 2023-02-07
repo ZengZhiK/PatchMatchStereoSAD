@@ -81,20 +81,18 @@ namespace pm {
     }
 
 
-    PatchMatch::PatchMatch(float alpha, float gamma, float tau_c, float tau_g, int window_size, int max_disparity,
-                           int plane_penalty)
-            : alpha(alpha), gamma(gamma), tau_c(tau_c), tau_g(tau_g), window_size(window_size),
-              max_disparity(max_disparity), plane_penalty(plane_penalty) {}
+    PatchMatch::PatchMatch(int window_size, int max_disparity, int plane_penalty)
+            : window_size(window_size), max_disparity(max_disparity), plane_penalty(plane_penalty) {}
 
 
-    float
-    PatchMatch::dissimilarity(const cv::Vec3f &pp, const cv::Vec3f &qq, const cv::Vec2f &pg, const cv::Vec2f &qg) {
-        float cost_c = cv::norm(pp - qq, cv::NORM_L1);
-        float cost_g = cv::norm(pg - qg, cv::NORM_L1);
-        cost_c = std::min(cost_c, this->tau_c);
-        cost_g = std::min(cost_g, this->tau_g);
-        return (1 - this->alpha) * cost_c + this->alpha * cost_g;
-    }
+//    float
+//    PatchMatch::dissimilarity(const cv::Vec3f &pp, const cv::Vec3f &qq, const cv::Vec2f &pg, const cv::Vec2f &qg) {
+//        float cost_c = cv::norm(pp - qq, cv::NORM_L1);
+//        float cost_g = cv::norm(pg - qg, cv::NORM_L1);
+//        cost_c = std::min(cost_c, this->tau_c);
+//        cost_g = std::min(cost_g, this->tau_g);
+//        return (1 - this->alpha) * cost_c + this->alpha * cost_g;
+//    }
 
 
     // aggregated matchig cost of a plane for a pixel
@@ -152,19 +150,19 @@ namespace pm {
     }
 
 
-    void PatchMatch::precompute_pixels_weights(const cv::Mat3b &frame, cv::Mat &weights, int ws) {
-        int half = ws / 2;
-
-#pragma omp parallel for
-        for (int cx = 0; cx < frame.cols; ++cx)
-            for (int cy = 0; cy < frame.rows; ++cy)
-
-                for (int x = cx - half; x <= cx + half; ++x)
-                    for (int y = cy - half; y <= cy + half; ++y)
-                        if (inside(x, y, 0, 0, frame.cols, frame.rows))
-                            weights.at<float>(cv::Vec<int, 4>{cy, cx, y - cy + half, x - cx + half}) = weight(
-                                    frame(cy, cx), frame(y, x), this->gamma);
-    }
+//    void PatchMatch::precompute_pixels_weights(const cv::Mat3b &frame, cv::Mat &weights, int ws) {
+//        int half = ws / 2;
+//
+//#pragma omp parallel for
+//        for (int cx = 0; cx < frame.cols; ++cx)
+//            for (int cy = 0; cy < frame.rows; ++cy)
+//
+//                for (int x = cx - half; x <= cx + half; ++x)
+//                    for (int y = cy - half; y <= cy + half; ++y)
+//                        if (inside(x, y, 0, 0, frame.cols, frame.rows))
+//                            weights.at<float>(cv::Vec<int, 4>{cy, cx, y - cy + half, x - cx + half}) = weight(
+//                                    frame(cy, cx), frame(y, x), this->gamma);
+//    }
 
 
     void PatchMatch::planes_to_disparity(const Matrix2D<Plane> &planes, cv::Mat1f &disp) {
@@ -402,7 +400,7 @@ namespace pm {
                     disps_win.push_back(disparity(y, x));
                 }
 
-        if (disps_win.size() > 0) {
+        if (!disps_win.empty()) {
             std::sort(disps_win.begin(), disps_win.end());
             //std::cerr << disps_win.size() << ", " << disps_win[disps_win.size() / 2] << std::endl;
             if ((disps_win.size() % 2) != 0)

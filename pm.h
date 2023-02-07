@@ -63,8 +63,7 @@ private:
 namespace pm {
     class PatchMatch {
     public:
-        PatchMatch(float alpha, float gamma, float tau_c, float tau_g, int window_size, int max_disparity,
-                   int plane_penalty);
+        PatchMatch(int window_size, int max_disparity, int plane_penalty);
 
         PatchMatch(const PatchMatch &pm) = delete;
 
@@ -82,10 +81,10 @@ namespace pm {
 
         cv::Mat1f getRightDisparityMap() const;
 
-        float alpha;
-        float gamma;
-        float tau_c;
-        float tau_g;
+//        float alpha;
+//        float gamma;
+//        float tau_c;
+//        float tau_g;
         int window_size;
         int max_disparity;
         int plane_penalty;
