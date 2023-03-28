@@ -2,11 +2,12 @@
 #include <string>
 #include <opencv2/opencv.hpp>
 #include <cstdlib>
+#include <ctime>
 #include "pm.h"
 
-// PatchMatch.exe F:\1_Code\2_CPP\PatchMatchStereoSAD\Speckle_Data\data75F\im0.png F:\1_Code\2_CPP\PatchMatchStereoSAD\Speckle_Data\data75F\im1.png F:\1_Code\2_CPP\PatchMatchStereoSAD\Speckle_Data\data75F\PM3SAD11MF7 11 500 3
-// PatchMatch.exe F:\1_Code\2_CPP\PatchMatchStereoSAD\Speckle_Data\data150F\im0.png F:\1_Code\2_CPP\PatchMatchStereoSAD\Speckle_Data\data150F\im1.png F:\1_Code\2_CPP\PatchMatchStereoSAD\Speckle_Data\data150F\PM3SAD11MF7 11 670 3
-// PatchMatch.exe F:\1_Code\2_CPP\PatchMatchStereoSAD\MiddEval3_Data\trainingQ\Adirondack\im0.png F:\1_Code\2_CPP\PatchMatchStereoSAD\MiddEval3_Data\trainingQ\Adirondack\im1.png F:\1_Code\2_CPP\PatchMatchStereoSAD\MiddEval3_Data\trainingQ\Adirondack\PM3SAD11MF7 11 75 3
+// PatchMatch.exe F:\1_Code\2_CPP\PatchMatchStereoSAD\imgs\Speckle\BL75\im0.png F:\1_Code\2_CPP\PatchMatchStereoSAD\imgs\Speckle\BL75\im1.png F:\1_Code\2_CPP\PatchMatchStereoSAD\imgs\Speckle\BL75\PM3SAD11MF7 11 500 3
+// PatchMatch.exe F:\1_Code\2_CPP\PatchMatchStereoSAD\imgs\Speckle\BL150\im0.png F:\1_Code\2_CPP\PatchMatchStereoSAD\imgs\Speckle\BL150\im1.png F:\1_Code\2_CPP\PatchMatchStereoSAD\imgs\Speckle\BL150\PM3SAD11MF7 11 670 3
+// PatchMatch.exe F:\1_Code\2_CPP\PatchMatchStereoSAD\imgs\MiddEval3\im0.png F:\1_Code\2_CPP\PatchMatchStereoSAD\imgs\MiddEval3\im1.png F:\1_Code\2_CPP\PatchMatchStereoSAD\imgs\MiddEval3\PM3SAD11MF7 11 75 3
 
 bool check_image(const cv::Mat &image, std::string name = "Image") {
     if (!image.data) {
@@ -31,6 +32,9 @@ int main(int argc, char **argv) {
         std::cerr << "parameter number error." << std::endl;
         return 1;
     }
+
+    std::cerr << "left img: " << argv[1] << std::endl;
+    std::cerr << "right img: " << argv[2] << std::endl;
 
     std::string out_dir = argv[3];
     std::cerr << "result dir: " << out_dir << std::endl;
@@ -65,19 +69,28 @@ int main(int argc, char **argv) {
         return 1;
 
     // processing images
+    clock_t startTime = clock();
     pm::PatchMatch patch_match(window_size, max_disparity, plane_penalty);
     patch_match.set(img1, img2);
     patch_match.process(iterations);
     patch_match.postProcess();
+    clock_t endTime = clock();
+    std::cerr << "The run time is: " << (double) (endTime - startTime) / CLOCKS_PER_SEC << "s" << std::endl;
 
     cv::Mat1f disp1 = patch_match.getLeftDisparityMap();
     cv::Mat1f disp2 = patch_match.getRightDisparityMap();
 
-    std::vector<int> compression_params;  //无损压缩参数
-    compression_params.push_back(cv::IMWRITE_TIFF_COMPRESSION);
-    compression_params.push_back(1);
-    imwrite(out_dir + "/left_disparity.tiff", disp1, compression_params);
-    imwrite(out_dir + "/right_disparity.tiff", disp2, compression_params);
+//    std::vector<int> compression_params;  //无损压缩参数
+//    compression_params.push_back(cv::IMWRITE_TIFF_COMPRESSION);
+//    compression_params.push_back(1);
+//    cv::imwrite(out_dir + "/left_disparity.tiff", disp1, compression_params);
+//    cv::imwrite(out_dir + "/right_disparity.tiff", disp2, compression_params);
+
+    std::string command;
+    command = "mkdir " + out_dir;
+    system(command.c_str());
+    cv::imwrite(out_dir + "/left_disparity.pfm", disp1);
+    cv::imwrite(out_dir + "/right_disparity.pfm", disp2);
 
     cv::normalize(disp1, disp1, 0, 255, cv::NORM_MINMAX);
     cv::normalize(disp2, disp2, 0, 255, cv::NORM_MINMAX);

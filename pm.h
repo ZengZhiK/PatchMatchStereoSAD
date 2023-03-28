@@ -9,6 +9,7 @@
 #include <utility>
 #include <random>
 #include <algorithm>
+#include <omp.h>
 
 
 template<typename T>
