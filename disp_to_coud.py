@@ -25,7 +25,7 @@ def save_points_to_ply(filepath, points, write_ascii=False):
 
 
 if __name__ == '__main__':
-    root_dir = r'F:\1_Code\2_CPP\PatchMatchStereoSAD\imgs\Speckle\BL150\PM3SAD11MF7'
+    root_dir = r'F:\1_Code\2_CPP\PatchMatchStereoSAD\imgs\Speckle\BL150\gdqn\PM3SAD11MF7'
     img_filename = 'left_disparity.pfm'
     disp, _ = pfm_util.readPFM(os.path.join(root_dir, img_filename))
 

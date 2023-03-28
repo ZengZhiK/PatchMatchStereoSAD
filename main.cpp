@@ -5,8 +5,9 @@
 #include <ctime>
 #include "pm.h"
 
-// PatchMatch.exe F:\1_Code\2_CPP\PatchMatchStereoSAD\imgs\Speckle\BL75\im0.png F:\1_Code\2_CPP\PatchMatchStereoSAD\imgs\Speckle\BL75\im1.png F:\1_Code\2_CPP\PatchMatchStereoSAD\imgs\Speckle\BL75\PM3SAD11MF7 11 500 3
-// PatchMatch.exe F:\1_Code\2_CPP\PatchMatchStereoSAD\imgs\Speckle\BL150\im0.png F:\1_Code\2_CPP\PatchMatchStereoSAD\imgs\Speckle\BL150\im1.png F:\1_Code\2_CPP\PatchMatchStereoSAD\imgs\Speckle\BL150\PM3SAD11MF7 11 670 3
+// PatchMatch.exe F:\1_Code\2_CPP\PatchMatchStereoSAD\imgs\Speckle\BL75\qinnv\im0.png F:\1_Code\2_CPP\PatchMatchStereoSAD\imgs\Speckle\BL75\qinnv\im1.png F:\1_Code\2_CPP\PatchMatchStereoSAD\imgs\Speckle\BL75\qinnv\PM3SAD11MF7 11 500 3
+// PatchMatch.exe F:\1_Code\2_CPP\PatchMatchStereoSAD\imgs\Speckle\BL150\qinnv\im0.png F:\1_Code\2_CPP\PatchMatchStereoSAD\imgs\Speckle\BL150\qinnv\im1.png F:\1_Code\2_CPP\PatchMatchStereoSAD\imgs\Speckle\BL150\qinnv\PM3SAD11MF7 11 670 3
+// PatchMatch.exe F:\1_Code\2_CPP\PatchMatchStereoSAD\imgs\Speckle\BL150\gdqn\im0.png F:\1_Code\2_CPP\PatchMatchStereoSAD\imgs\Speckle\BL150\gdqn\im1.png F:\1_Code\2_CPP\PatchMatchStereoSAD\imgs\Speckle\BL150\gdqn\PM3SAD11MF7 11 670 3
 // PatchMatch.exe F:\1_Code\2_CPP\PatchMatchStereoSAD\imgs\MiddEval3\im0.png F:\1_Code\2_CPP\PatchMatchStereoSAD\imgs\MiddEval3\im1.png F:\1_Code\2_CPP\PatchMatchStereoSAD\imgs\MiddEval3\PM3SAD11MF7 11 75 3
 
 bool check_image(const cv::Mat &image, std::string name = "Image") {
