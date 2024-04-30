@@ -23,7 +23,7 @@ PatchMatch 算法主程序
 PatchMatch.exe F:\1_Code\2_CPP\PatchMatchStereoSAD\imgs\Speckle\BL75\qinnv\im0.png F:\1_Code\2_CPP\PatchMatchStereoSAD\imgs\Speckle\BL75\qinnv\im1.png F:\1_Code\2_CPP\PatchMatchStereoSAD\imgs\Speckle\BL75\qinnv\PM3SAD11MF7 11 500 3
 ```
 
-参数解释：PatchMatch.exe [左图] [右图] [结果保存路径(会自动创建，但只会创建最后一级目录)] [SAD窗口大小] [最大视察] [迭代次数]
+参数解释：PatchMatch.exe [左图] [右图] [结果保存路径(会自动创建，但只会创建最后一级目录)] [SAD窗口大小] [最大视差] [迭代次数]
 
 ## 修改点
 
